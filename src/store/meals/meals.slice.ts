@@ -19,4 +19,5 @@ export const mealsSlice = createSlice({
       state.items = action.payload
     })
   },
+  
 })

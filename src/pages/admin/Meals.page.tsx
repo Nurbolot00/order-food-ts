@@ -1,7 +1,12 @@
 import { Button, Grid, IconButton } from '@mui/material'
 import { useSelector } from 'react-redux'
 import useAppDispatch from '../../hooks/useAppDispatch'
-import { getAllMeals } from '../../store/meals/meals.thunk'
+import {
+  addMeals,
+  deleteMeal,
+  getAllMeals,
+  updateMeal,
+} from '../../store/meals/meals.thunk'
 import { RootState } from '../../store/store'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
@@ -27,15 +32,16 @@ const Meals = () => {
   }, [])
 
   const deleteMealHandler = (id: string) => {
-    console.log(id)
-    // dispatch(deleteMeal(id))
+    dispatch(deleteMeal(id))
   }
 
   const editMealHandler = (id: string) => {
     showModalHandler('edit')
+    console.log('edit btn was clicked')
+
     params.set('mealId', id)
     setParams(params)
-    console.log(id)
+    console.log(params)
     // dispatch(deleteMeal(id))
   }
 
@@ -62,7 +68,7 @@ const Meals = () => {
       key: 'actions',
       render: (meal: Meal) => (
         <Grid>
-          <IconButton onClick={() => editMealHandler}>
+          <IconButton onClick={() => editMealHandler(meal._id)}>
             <EditIcon />
           </IconButton>
           <IconButton onClick={() => deleteMealHandler(meal._id)}>
@@ -76,6 +82,7 @@ const Meals = () => {
   const showModalHandler = (mode: 'add' | 'edit') => {
     params.set('modal', mode)
     setParams(params)
+    console.log(params)
   }
 
   const closeModalHandler = () => {
@@ -83,8 +90,9 @@ const Meals = () => {
     setParams(params)
   }
 
-  const saveHandler = (values: FormSchema) => {
-    // dispatch(action)
+  const saveHandler = (id: string, values: FormSchema) => {
+    console.log(id,values)
+    // dispatch(updateMeal(id,values))
   }
 
   const isModalOpen = !!params.get('modal')

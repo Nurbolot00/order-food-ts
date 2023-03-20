@@ -29,3 +29,13 @@ export  type Column<T> = {
     index?: boolean
     render?: (meal: T) => JSX.Element
   }
+
+
+  export type updateMealData = {
+    id?: string
+    data: {
+        title: string
+        description: string
+        price: number
+    }
+}

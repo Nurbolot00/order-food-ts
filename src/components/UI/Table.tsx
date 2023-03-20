@@ -66,7 +66,7 @@ const AppTable = <T,>({
                 >
                   {columns.map((column) => {
                     if (column.render) {
-                      return column.render(meal)
+                      return <TableCell key={column.key}>{column.render(meal)}</TableCell>
                     }
 
                     const value = column.index

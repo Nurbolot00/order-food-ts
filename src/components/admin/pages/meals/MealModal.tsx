@@ -2,9 +2,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Box, Modal, TextField } from '@mui/material'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
 import { getMealById } from '../../../../api/mealsService'
+import { addMeals } from '../../../../store/meals/meals.thunk'
+import { AppDispatch } from '../../../../store/store'
 
 const schema = z.object({
   title: z.string().nonempty(),
@@ -15,7 +18,7 @@ const schema = z.object({
 type Props = {
   open: boolean
   onClose: () => void
-  onSubmit: (values: FormSchema) => void
+  onSubmit: (id: string, values: FormSchema) => void
 }
 
 const styledModal = {
@@ -30,10 +33,24 @@ const styledModal = {
   p: 4,
 }
 
+export type SendData = {
+  id: string
+  values: FormSchema
+}
+
 export type FormSchema = (typeof schema)['_output']
+
+export type AddFormSchema = {
+  _id: string
+  title: string
+  description: string
+  price: number
+}
 
 const MealModal = ({ open, onClose, onSubmit }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams()
+
+  const dispatch = useDispatch<AppDispatch>()
 
   const { register, handleSubmit, reset, formState } = useForm({
     defaultValues: {
@@ -44,9 +61,13 @@ const MealModal = ({ open, onClose, onSubmit }: Props) => {
     mode: 'onBlur',
     resolver: zodResolver(schema),
   })
+  
+  const id = searchParams.get('mealId') || '1'
 
   const submitHandler = (values: FormSchema) => {
-    onSubmit(values)
+    open && searchParams.get('modal') === 'edit'
+      ? onSubmit(id, values)
+      : dispatch(addMeals(values))
   }
 
   useEffect(() => {
