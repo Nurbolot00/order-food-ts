@@ -1,1 +1,3 @@
-/// <reference types="react-scripts" />
+/* eslint-disable prettier/prettier */
+
+/// <reference types="react-scripts"/>
