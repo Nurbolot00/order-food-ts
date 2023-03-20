@@ -2,7 +2,6 @@ import { Button, Grid, IconButton } from '@mui/material'
 import { useSelector } from 'react-redux'
 import useAppDispatch from '../../hooks/useAppDispatch'
 import {
-  addMeals,
   deleteMeal,
   getAllMeals,
   updateMeal,
@@ -92,7 +91,7 @@ const Meals = () => {
 
   const saveHandler = (id: string, values: FormSchema) => {
     console.log(id,values)
-    // dispatch(updateMeal(id,values))
+    dispatch(updateMeal({id,values}))
   }
 
   const isModalOpen = !!params.get('modal')

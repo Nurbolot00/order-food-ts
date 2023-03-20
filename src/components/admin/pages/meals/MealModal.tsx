@@ -61,7 +61,7 @@ const MealModal = ({ open, onClose, onSubmit }: Props) => {
     mode: 'onBlur',
     resolver: zodResolver(schema),
   })
-  
+
   const id = searchParams.get('mealId') || '1'
 
   const submitHandler = (values: FormSchema) => {
@@ -101,12 +101,14 @@ const MealModal = ({ open, onClose, onSubmit }: Props) => {
             {...register('price', { valueAsNumber: true })}
             label="price"
           />
+          <div>
           <Button variant="outlined" color="info" onClick={onClose}>
             Cancel
           </Button>
           <Button variant="outlined" color="primary" type="submit">
             Save
           </Button>
+          </div>
         </form>
       </Box>
     </Modal>
