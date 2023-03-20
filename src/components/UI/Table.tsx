@@ -18,20 +18,20 @@ type Props<T> = {
   withPagination?: boolean
 }
 
-const {
-  rowsPerPage,
-  handleChangeRowsPerPage,
-  handleChangePage,
-  page,
-  paginate,
-} = useClientSidePagination()
-
 const AppTable = <T,>({
   columns,
   rows,
   getUniqueId,
   withPagination = true,
 }: Props<T>) => {
+  const {
+    rowsPerPage,
+    handleChangeRowsPerPage,
+    handleChangePage,
+    page,
+    paginate,
+  } = useClientSidePagination()
+
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>

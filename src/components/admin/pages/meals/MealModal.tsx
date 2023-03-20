@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
-import { mainApi } from '../../../../api/instances'
 import { getMealById } from '../../../../api/mealsService'
 
 const schema = z.object({
@@ -29,18 +28,17 @@ const styledModal = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-};
+}
 
 export type FormSchema = (typeof schema)['_output']
 
 const MealModal = ({ open, onClose, onSubmit }: Props) => {
-
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const { register, handleSubmit , reset, formState } = useForm({
+  const { register, handleSubmit, reset, formState } = useForm({
     defaultValues: {
       price: 0,
-      title: 0,
+      title: '',
       description: '',
     },
     mode: 'onBlur',
@@ -51,20 +49,18 @@ const MealModal = ({ open, onClose, onSubmit }: Props) => {
     onSubmit(values)
   }
 
-
-  useEffect(() =>{
-    const mealId =  searchParams.get('mealId')
-    if(open && searchParams.get('modal') === 'edit' &&  mealId){
-    
-      getMealById(mealId).then(({data}) =>{
+  useEffect(() => {
+    const mealId = searchParams.get('mealId')
+    if (open && searchParams.get('modal') === 'edit' && mealId) {
+      getMealById(mealId).then(({ data }) => {
         reset(data.data)
       })
     }
-    }, [open])
+  }, [open])
 
   return (
     <Modal open={open} onClose={onClose}>
-       <Box sx={styledModal}>
+      <Box sx={styledModal}>
         <form action="" onSubmit={handleSubmit(submitHandler)}>
           <TextField
             id="title"
@@ -81,12 +77,15 @@ const MealModal = ({ open, onClose, onSubmit }: Props) => {
           <TextField
             id="price"
             error={!!formState.errors.price}
-            {...register('price',{valueAsNumber: true})}
+            {...register('price', { valueAsNumber: true })}
             label="price"
-
           />
-          <Button variant='outlined' color='info' onClick={onClose}>Cancel</Button>
-          <Button variant='outlined' color='primary' type="submit">Save</Button>
+          <Button variant="outlined" color="info" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button variant="outlined" color="primary" type="submit">
+            Save
+          </Button>
         </form>
       </Box>
     </Modal>

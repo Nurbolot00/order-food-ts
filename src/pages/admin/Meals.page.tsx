@@ -8,15 +8,15 @@ import EditIcon from '@mui/icons-material/Edit'
 import AppTable from '../../components/UI/Table'
 import { Column, Meal } from '../../common/types'
 import { useEffect } from 'react'
-import MealModal, { FormSchema } from '../../components/admin/pages/meals/MealModal'
+import MealModal, {
+  FormSchema,
+} from '../../components/admin/pages/meals/MealModal'
 import { useSearchParams } from 'react-router-dom'
 
 const Meals = () => {
   const dispatch = useAppDispatch()
 
-
-
-  const [params,setParams] = useSearchParams()
+  const [params, setParams] = useSearchParams()
 
   const meals = useSelector((state: RootState) => state.meals.items)
 
@@ -31,10 +31,9 @@ const Meals = () => {
     // dispatch(deleteMeal(id))
   }
 
-
   const editMealHandler = (id: string) => {
     showModalHandler('edit')
-    params.set('mealId' , id)
+    params.set('mealId', id)
     setParams(params)
     console.log(id)
     // dispatch(deleteMeal(id))
@@ -63,7 +62,7 @@ const Meals = () => {
       key: 'actions',
       render: (meal: Meal) => (
         <Grid>
-          <IconButton onClick={() => editMealHandler }>
+          <IconButton onClick={() => editMealHandler}>
             <EditIcon />
           </IconButton>
           <IconButton onClick={() => deleteMealHandler(meal._id)}>
@@ -74,18 +73,18 @@ const Meals = () => {
     },
   ]
 
-  const showModalHandler = (mode: 'add' | 'edit') =>{
+  const showModalHandler = (mode: 'add' | 'edit') => {
     params.set('modal', mode)
     setParams(params)
   }
 
-  const closeModalHandler = () =>{
+  const closeModalHandler = () => {
     params.delete('modal')
     setParams(params)
   }
 
-  const saveHandler = (values: FormSchema) =>{
-    // dispatch(action  )
+  const saveHandler = (values: FormSchema) => {
+    // dispatch(action)
   }
 
   const isModalOpen = !!params.get('modal')
@@ -94,7 +93,11 @@ const Meals = () => {
     <Grid>
       <Button onClick={() => showModalHandler('add')}>Add new meal</Button>
 
-      <MealModal open={isModalOpen} onClose={closeModalHandler} onSubmit={saveHandler}/>
+      <MealModal
+        open={isModalOpen}
+        onClose={closeModalHandler}
+        onSubmit={saveHandler}
+      />
       <Grid>
         <AppTable
           withPagination={true}
