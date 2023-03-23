@@ -3,6 +3,7 @@
 import style from '@emotion/styled'
 import { useCallback, useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import Basket from '../../components/user/basket/Basket'
 import Header from './Header'
 
 
@@ -15,8 +16,8 @@ const UserLayout = () => {
 
   return (
     <>
-      <Header onShowBasket={showBasketHandler} />
-      
+      <Header  onShowBasket={showBasketHandler} />
+      <Basket open={isBasketVisible} onClose={showBasketHandler}/>
       <Content>
         <Outlet/>
       </Content>

@@ -1,6 +1,6 @@
 import { Grid, TextField, Typography, Button } from '@mui/material'
 import { styled } from '@mui/system'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
@@ -65,8 +65,9 @@ const SignIn = () => {
                       {formState.errors.password && (
                           <Error>{formState.errors.password.message}</Error>
                       )}
-                      <Button type="submit">Sign In</Button>
-                      <Link to="/signup">{`Don't have account`}</Link>
+                      <Button variant='contained' type="submit">Sign In</Button>
+                      <Link to="/signup">{`Don't have account?`}</Link>
+                      <Link to="/">Go Back to main Page</Link>
                   </FormGrid>
               </form>
           </GridContainer>
@@ -86,6 +87,7 @@ const GridContainer = styled(Grid)(() => ({
   background: '#fff',
   width: '500px',
   padding: '20px',
+  borderRadius: '1rem'
 }))
 
 const FormGrid = styled(Grid)(() => ({

@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { Meal } from "../../common/types"
-import { getAllOrders, getOrders, submitOrder } from "./orders.thunk"
+import { MealType } from "../../common/types"
+import { getAllOrders, getUserOrders, submitOrder } from "./orders.thunk"
 
 
 type MealsState = {
-    items: Meal[]
+    allOrder: MealType[]
   }
   
   const initialState: MealsState = {
-    items: [],
+    allOrder: [],
   }
 
 export const orderSlice = createSlice({
@@ -19,12 +19,12 @@ export const orderSlice = createSlice({
         builder.addCase(submitOrder.fulfilled, () => {
         //sdsadadsasd
     })
-        builder.addCase(getOrders.fulfilled, (state, action) => {
-            state.items = action.payload
+        builder.addCase(getUserOrders.fulfilled, (state, action) => {
+            state.allOrder = action.payload
 
         })
         builder.addCase(getAllOrders.fulfilled, (state, action) => {
-            state.items = action.payload
+            state.allOrder = action.payload
         })
     },
 })

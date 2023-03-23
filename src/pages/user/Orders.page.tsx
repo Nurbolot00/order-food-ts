@@ -1,24 +1,25 @@
-import { Grid, IconButton } from '@mui/material'
-import {format} from 'date-fns'
-import  { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Column, MealType } from '../../common/types'
-import AppTable from '../../components/UI/Table'
-import { getAllOrders } from '../../store/orders/orders.thunk'
-import { AppDispatch, RootState } from '../../store/store'
+import Grid from "@mui/material/Grid/Grid";
+import { format } from "date-fns";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Column, MealType } from "../../common/types";
+import AppTable from "../../components/UI/Table";
+import useAppDispatch from "../../hooks/useAppDispatch";
+import { getUserOrders } from "../../store/orders/orders.thunk";
+import { RootState } from "../../store/store";
 
-const Orders = () => {
+const UserOrders = () => {
 
     const date = (day:string) => {
         const formatDate = format(new Date(day), 'dd MMM yyyy , hh:mm:ss a')
         return formatDate
     }
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useAppDispatch()
   const items = useSelector((state: RootState) => state.orders.allOrder)
   console.log(items)
 
   useEffect(() => {
-    dispatch(getAllOrders())
+    dispatch(getUserOrders())
   }, [dispatch])
 
   const columns: Column<MealType>[] = [
@@ -26,11 +27,6 @@ const Orders = () => {
       header: '№',
       key: '_id',
       index: true,
-    },
-    {
-      header: 'Author',
-      key: 'name',
-      render: (meal: MealType) => <Grid>{meal.user.name}</Grid>,
     },
     {
       header: 'Meals/amount',
@@ -61,6 +57,6 @@ const Orders = () => {
       <AppTable columns={columns} rows={items} getUniqueId={(val) => val._id} />
     </div>
   )
-}
+};
 
-export default Orders
+export default UserOrders;

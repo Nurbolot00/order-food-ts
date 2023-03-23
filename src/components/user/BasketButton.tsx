@@ -20,7 +20,7 @@ const BasketButton = ({ count, ...restProps }:Props) => (
 export default memo(BasketButton)
 
 const StyledBasketButton = styled(Button)(({ theme }) => ({
-  background: theme.palette.primary.dark,
+  background: '#481805',
   padding: '10px 32px',
   fontWeight: '600',
   fontSize: '16px',
@@ -29,7 +29,7 @@ const StyledBasketButton = styled(Button)(({ theme }) => ({
   border: 'none',
   borderRadius: '30px',
   '&:hover': {
-    background: theme.palette.primary.dark,
+    background: '#a63508',
   },
   '&:active': {
     background: '#993108',

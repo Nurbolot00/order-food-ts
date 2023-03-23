@@ -1,18 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { addOrderRequest, getAllOrdersRequest, getUserOrdersRequest } from "../../api/ordersService"
+import { AxiosError, isAxiosError } from "axios"
+import { getAllOrdersRequest, getUserOrdersRequest, submitOrderRequest } from "../../api/ordersService"
+import { getBasket } from "../basket/basket.thunk"
 
-export const submitOrder = createAsyncThunk(
-    'basket/submitOrder',
-    async (price: number, { rejectWithValue }) => {
-        try {
-            const { data } = await addOrderRequest(price)
-            return data
-        } catch (error) {
-            return rejectWithValue('Some thing wen wrong')
-        }
-    }
-)
-export const getOrders = createAsyncThunk(
+
+export const getUserOrders = createAsyncThunk(
     'basket/getorder',
     async (_, { rejectWithValue }) => {
         try {
@@ -31,6 +23,28 @@ export const getAllOrders = createAsyncThunk(
             return data.data
         } catch (error) {
             return rejectWithValue('Some thing wen wrong')
+        }
+    }
+)
+
+export const submitOrder = createAsyncThunk(
+    'order/postOrder',
+    async (
+        totalPrice: { totalPrice: number },
+        { rejectWithValue, dispatch }
+    ) => {
+        try {
+            await submitOrderRequest(totalPrice)
+            dispatch(getBasket())
+        } catch (e) {
+            if (isAxiosError(e)) {
+                const error = e as AxiosError<{
+                    status: number
+                    message: string
+                }>
+                return rejectWithValue(error.response?.data.message)
+            }
+            return rejectWithValue('Something went wrong')
         }
     }
 )

@@ -34,7 +34,7 @@ const AppTable = <T,>({
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer sx={{ maxHeight: 550 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -88,7 +88,7 @@ const AppTable = <T,>({
       </TableContainer>
       {withPagination && (
         <TablePagination
-          rowsPerPageOptions={[2, 4]}
+          rowsPerPageOptions={[7, 12, 24, 48]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
